@@ -57,7 +57,7 @@ public:
 
 template <class ourIterator, class ourTarget>
 
-ourIterator ourFind(ourIterator begin, ourIterator end, ourTarget target) {  // Task 20
+ourIterator ourFind(ourIterator begin, ourIterator end, const ourTarget& target) {  // Task 20
     cout << "Calling Function Template" << endl;
     for(; begin != end; begin++)
         if(*begin == target) return begin;
@@ -223,16 +223,48 @@ int main() {
     // 21. Using a vector of strings, print a line showing the number
     //     of distinct words and the words themselves.
     cout << "Task 21:\n";
-
+    ifstream fin("pooh-nopunc.txt");
+    vector<string> v_tokens;
+    string token;
+    while(fin) {
+        fin >> token;
+        if(find(v_tokens.begin(), v_tokens.end(), token) == v_tokens.end())
+            v_tokens.push_back(token);
+    }
+    fin.close();
+    cout << v_tokens.size();
+    for(const string& str : v_tokens)
+        cout << str << " ";
     cout << "\n=======\n";
 
     // 22. Repeating previous step, but using the set
     cout << "Task 22:\n";
-
-    cout << "=======\n";
+    fin.open("pooh-nopunc.txt");
+    set<string> s_tokens;
+    while(fin) {
+        fin >> token;
+        s_tokens.insert(token);
+    }
+    fin.close();
+    cout << s_tokens.size();
+    for(const string& str : s_tokens)
+        cout << str << " ";
+    cout << "\n=======\n";
 
     // 23. Word co-occurence using map
     cout << "Task 23:\n";
-
-    cout << "=======\n";
+    fin.open("pooh-nopunc.txt");
+    map<string, vector<int>> wordMap;
+    for(int count = 0; fin; count++) {
+        fin >> token;
+        wordMap[token].push_back(count);
+    }
+    fin.close();
+    cout << wordMap.size();
+    for(const auto& pair : wordMap) {
+        cout << pair.first;
+        for(const auto i : pair.second) cout << " " << i;
+        cout << endl;
+    }
+    cout << "\n=======\n";
 }
