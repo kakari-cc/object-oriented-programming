@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
 
 struct TNode {
@@ -9,7 +10,8 @@ struct TNode {
 };
 
 int max(TNode* root) {
-  // Provide this code
+    if(root == nullptr) return INT_MIN;
+    return max(root->data, max(max(root->left), max(root->right)));
 }
 
 int main() {
